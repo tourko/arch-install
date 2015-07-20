@@ -3,13 +3,22 @@
 TIMEZONE=Europe/Copenhagen
 USER=at
 
-###########################
-# Get the first SCSI disk #
-###########################
+###############################################
+# Install on the first non-removabe SCSI disk #
+###############################################
 
-# Major number for SCSI disk devices is 8
+# 8 is a major number for SCSI devices
 MAJOR_NUMBER=8
-DISK=`lsblk --path --nodeps --noheadings --include ${MAJOR_NUMBER} --output=NAME | head -1`
+
+# Find first non-removabel SCSI disk devices
+DISK=`lsblk --path --nodeps --noheadings --include 8 --output=NAME,RM | (while read dev rm
+do
+	if (($rm == 0)); then
+		DISK=$dev
+    break
+	fi
+done && echo $DISK)`
+
 if [ -z "$DISK" ]; then
   echo "!!! No SCSI disks found. Existing the instalation. !!!"
   exit
@@ -28,14 +37,14 @@ do
   umount $dev
 done
 
+# TODO: Revome VGs before wiping out partition table
+
 # Wipe out MBR and GPT
+echo ">>> Wiping out MBR and GPT "
 sgdisk --zap-all ${DISK}
-sgdisk --print $DISK | egrep '^[[:blank:]]{0,3}[[:digit:]]' | awk '{print $1}' | while read num
-do
-  echo ">>> Deleting partition #$num"
-  sgdisk --delete $num $DISK
-  sleep 1
-done
+
+# Inform the kernel of partition table changes
+partprobe ${DISK}
 
 #################
 # Set GPT label #
