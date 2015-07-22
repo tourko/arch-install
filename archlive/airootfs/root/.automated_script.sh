@@ -4,7 +4,6 @@ script_cmdline ()
 {
     local param
  	for param in $(< /proc/cmdline); do
-		echo ${param}
         case "${param}" in
             script=*) echo "${param#*=}" ; return 0 ;;
         esac
@@ -15,7 +14,6 @@ automated_script ()
 {
     local script rt
     script="$(script_cmdline)"
-	echo ${script}
     if [[ -n "${script}" && ! -x /tmp/startup_script ]]; then
         if [[ "${script}" =~ ^http:// || "${script}" =~ ^ftp:// ]]; then
             wget "${script}" --retry-connrefused -q -O /tmp/startup_script >/dev/null
