@@ -86,6 +86,8 @@ make_setup_mkinitcpio() {
 make_customize_airootfs() {
     cp -af ${script_path}/airootfs ${work_dir}/${arch}
 
+	chown -R root:root ${work_dir}/${arch}
+
     curl -o ${work_dir}/${arch}/airootfs/etc/pacman.d/mirrorlist 'https://www.archlinux.org/mirrorlist/?country=all&protocol=http&use_mirror_status=on'
 
     lynx -dump -nolist 'https://wiki.archlinux.org/index.php/Installation_Guide?action=render' >> ${work_dir}/${arch}/airootfs/root/install.txt
