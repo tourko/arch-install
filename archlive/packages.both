@@ -1,7 +1,7 @@
 arch-install-scripts
 b43-fwcutter
+bash-completion
 btrfs-progs
-clonezilla
 crda
 darkhttpd
 ddrescue
@@ -18,7 +18,6 @@ fsarchiver
 gnu-netcat
 gpm
 gptfdisk
-grml-zsh-config
 grub
 hdparm
 ipw2100-fw
@@ -26,7 +25,6 @@ ipw2200-fw
 irssi
 lftp
 linux-atm
-mc
 mtools
 nfs-utils
 nilfs-utils

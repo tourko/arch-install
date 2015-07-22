@@ -7,8 +7,6 @@ locale-gen
 
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
-usermod -s /usr/bin/zsh root
-cp -aT /etc/skel/ /root/
 chmod 700 /root
 
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
