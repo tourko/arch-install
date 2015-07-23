@@ -1,0 +1,18 @@
+<network>
+  <name>vm-net</name>
+  <uuid>1d314024-9d10-484b-81f7-a9af3ef3f659</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <mac address='52:54:56:3f:4d:5c'/>
+  <ip address='192.168.111.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.111.2' end='192.168.111.254'/>
+      <host mac='52:54:00:f1:e3:88' name='sandbox' ip='192.168.111.111'/>
+    </dhcp>
+  </ip>
+</network>
+
