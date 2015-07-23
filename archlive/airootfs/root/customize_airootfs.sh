@@ -13,4 +13,5 @@ sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
 sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
 
 systemctl enable pacman-init.service choose-mirror.service
+systemctl enable sshd.service
 systemctl set-default multi-user.target
