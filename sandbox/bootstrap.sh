@@ -1,15 +1,17 @@
 #!/bin/env bash
 
-if [[ ${EUID} -ne 0 ]]; then
-	echo "This script must be run as root."
-	exit
-fi
-
 VM=sandbox
 
-VM_STATE=`virsh domstate $VM`
-[ "$VM_STATE" == "running" ] && virsh destroy $VM
+VM_STATE=`virsh --connect qemu:///system domstate $VM`
+[ "$VM_STATE" == "running" ] && virsh --connect qemu:///system destroy $VM
 
-virsh undefine $VM
-virsh define $VM.xml
-virsh start $VM
+virsh --connect qemu:///system undefine $VM
+
+sudo rm /tmp/archlinux.iso
+cp ../archlive/out/archlinux.iso /tmp
+
+sudo rm /tmp/${VM}.img
+dd if=/dev/zero of=/tmp/${VM}.img bs=1G count=2
+
+virsh --connect qemu:///system define $VM.xml
+virsh --connect qemu:///system start $VM
