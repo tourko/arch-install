@@ -5,8 +5,10 @@
   <currentMemory unit='KiB'>1048576</currentMemory>
   <vcpu placement='static' current='2'>4</vcpu>
   <os>
-    <type arch='x86_64' machine='pc-i440fx-2.3'>hvm</type>
-    <boot dev='cdrom'/>
+	<type arch='x86_64' machine='pc-i440fx-2.3'>hvm</type>
+	<bootmenu enable="yes" timeout="5000"/>
+	<boot dev='hd'/>
+	<boot dev='cdrom'/>
   </os>
   <features>
     <acpi/>
