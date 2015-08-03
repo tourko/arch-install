@@ -129,12 +129,16 @@ echo ">>> Generating an fstab"
 genfstab -L -p /mnt >> /mnt/etc/fstab
 cat /mnt/etc/fstab
 
-#####################
-# Copy config files #
-#####################
-echo ">>> Copying config files"
-tar -cjf airootfs.tar.bz2 airootfs
-cp airootfs.tar.bz2 /mnt
+##############################
+# Copy root FS overlay files #
+##############################
+echo ">>> Copying root FS overlay files"
+SCRIPT_PATH=$(dirname ${BASH_SOURCE[0]})
+pushd ${SCRIPT_PATH}
+ROOTFS='rootfs'
+tar -cjf /tmp/${ROOTFS}.tar.bz2 ${ROOTFS}
+popd
+cp /tmp/${ROOTFS}.tar.bz2 /mnt
 
 ##############################
 # Chroot into the new system #
@@ -145,9 +149,9 @@ arch-chroot /mnt /bin/env PS1="(chroot) $PS1" TIMEZONE=$TIMEZONE USER=$USER DISK
 ########################
 # Extract config files #
 ########################
-mv /airootfs.tar.bz2 /tmp
-tar -xvjf /tmp/airootfs.tar.bz2 -C /tmp
-CONFIG=/tmp/airootfs
+mv /rootfs.tar.bz2 /tmp
+tar -xvjf /tmp/rootfs.tar.bz2 -C /tmp
+CONFIG=/tmp/rootfs
 
 ############################
 # Install usefull packages #

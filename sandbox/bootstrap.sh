@@ -7,10 +7,10 @@ VM_STATE=`virsh --connect qemu:///system domstate $VM`
 
 virsh --connect qemu:///system undefine $VM
 
-sudo rm /tmp/archlinux.iso
+[ -f /tmp/archlinux.iso ] && sudo rm /tmp/archlinux.iso
 cp ../archlive/out/archlinux.iso /tmp
 
-sudo rm /tmp/${VM}.img
+[ -f /tmp/${VM}.img ] && sudo rm /tmp/${VM}.img
 dd if=/dev/zero of=/tmp/${VM}.img bs=1G count=2
 
 virsh --connect qemu:///system define $VM.xml
