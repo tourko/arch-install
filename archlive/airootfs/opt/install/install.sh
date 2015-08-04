@@ -116,11 +116,15 @@ mkdir /mnt/boot
 echo ">>> Mounting /dev/sda2 (/boot)"
 mount ${DISK}2 /mnt/boot
 
+# Get the path to this script
+MY_PATH=`dirname "$0"`
+MY_PATH=`( cd "$MY_PATH" && pwd )`
+
 ###########################
 # Install the base system #
 ###########################
 echo ">>> Installing the base system"
-pacstrap /mnt base
+pacstrap -C ${MY_PATH}/pacman.conf /mnt base
 
 #####################
 # Generate an fstab #
@@ -133,10 +137,6 @@ cat /mnt/etc/fstab
 # Copy root FS overlay files #
 ##############################
 echo ">>> Copying root FS overlay files"
-
-# Get the path to this script
-MY_PATH=`dirname "$0"`
-MY_PATH=`( cd "$MY_PATH" && pwd )`
 
 pushd ${MY_PATH}
 ROOTFS='rootfs'
