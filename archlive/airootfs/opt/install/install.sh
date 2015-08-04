@@ -133,12 +133,17 @@ cat /mnt/etc/fstab
 # Copy root FS overlay files #
 ##############################
 echo ">>> Copying root FS overlay files"
-SCRIPT_PATH=$(dirname ${BASH_SOURCE[0]})
-pushd ${SCRIPT_PATH}
+
+# Get the path to this script
+MY_PATH=`dirname "$0"`
+MY_PATH=`( cd "$MY_PATH" && pwd )`
+
+pushd ${MY_PATH}
 ROOTFS='rootfs'
 tar -cjf /tmp/${ROOTFS}.tar.bz2 ${ROOTFS}
 popd
-cp /tmp/${ROOTFS}.tar.bz2 /mnt
+
+mv /tmp/${ROOTFS}.tar.bz2 /mnt
 
 ##############################
 # Chroot into the new system #

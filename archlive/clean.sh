@@ -14,4 +14,4 @@ MY_PATH=`( cd "$MY_PATH" && pwd )`
 [ -d $MY_PATH/work ] && rm -rf $MY_PATH/work
 
 # Clean up install repo
-[ -d $MY_PATH/airootfs/opt/install/repo ] && rm -f $MY_PATH/airootfs/opt/install/repo/*
+#[ -d $MY_PATH/airootfs/opt/install/repo ] && rm -f $MY_PATH/airootfs/opt/install/repo/*
