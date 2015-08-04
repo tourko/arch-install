@@ -1,7 +1,0 @@
-Description='A static ethernet connection'
-Interface=net0
-Connection=ethernet
-IP=static
-Address=('10.211.55.10/24')
-Gateway='10.211.55.1'
-DNS=('10.211.55.1')
