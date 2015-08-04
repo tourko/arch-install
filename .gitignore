@@ -1,0 +1,4 @@
+*.pkg.tar.xz
+*.db
+*.db.tar.gz
+*.db.tar.gz.old

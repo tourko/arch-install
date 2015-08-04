@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env sh
 
 if [[ ${EUID} -ne 0 ]]; then
 	echo "This script must be run as root."
@@ -9,7 +9,7 @@ fi
 MY_PATH=`dirname "$0"`
 MY_PATH=`( cd "$MY_PATH" && pwd )`
 
-# Clean up after the last build
-[ -d $MY_PATH/out ] && rm -rf $MY_PATH/out
-[ -d $MY_PATH/work ] && rm -rf $MY_PATH/work
+REPO_PATH="$MY_PATH/airootfs/opt/install/repo"
 
+# Clean up install repo
+[ -d $REPO_PATH ] && rm -f $REPO_PATH/*
