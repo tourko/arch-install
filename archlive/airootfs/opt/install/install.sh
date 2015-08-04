@@ -153,6 +153,11 @@ mv /rootfs.tar.bz2 /tmp
 tar -xvjf /tmp/rootfs.tar.bz2 -C /tmp
 CONFIG=/tmp/rootfs
 
+################################
+# Synchronize package database #
+################################
+pacman -Sy
+
 ############################
 # Install usefull packages #
 ############################
