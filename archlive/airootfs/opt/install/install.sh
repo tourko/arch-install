@@ -125,6 +125,12 @@ MY_PATH=`( cd "$MY_PATH" && pwd )`
 ###########################
 echo ">>> Installing the base system"
 pacstrap -C ${MY_PATH}/pacman.conf /mnt base
+pacstrap -C ${MY_PATH}/pacman.conf /mnt patch
+pacstrap -C ${MY_PATH}/pacman.conf /mnt grub
+pacstrap -C ${MY_PATH}/pacman.conf /mnt openssh
+pacstrap -C ${MY_PATH}/pacman.conf /mnt vim-minimal
+pacstrap -C ${MY_PATH}/pacman.conf /mnt sudo
+pacstrap -C ${MY_PATH}/pacman.conf /mnt bash-completion
 
 #####################
 # Generate an fstab #
@@ -162,12 +168,6 @@ CONFIG=/tmp/rootfs
 # Synchronize package database #
 ################################
 pacman -Sy
-
-############################
-# Install usefull packages #
-############################
-echo ">>> Installing optional packages"
-pacman --noconfirm --quiet -S patch
 
 ##########################
 # Write to /etc/hostname #
@@ -207,7 +207,6 @@ patch /etc/pacman.conf $CONFIG/etc/pacman.conf.diff
 # Install and configure a boot loader #
 #######################################
 echo ">>> Installing GRUB"
-pacman --noconfirm --quiet -S grub
 grub-install --target=i386-pc --recheck $DISK
 grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -217,11 +216,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 echo ">>> Enabling DHCP"
 systemctl enable dhcpcd.service
 
-#############################
-# Install and configure SSH #
-#############################
-echo ">>> Installing and configuering openssh"
-pacman --noconfirm --quiet -S openssh
+#################
+# Configure SSH #
+#################
+echo ">>> Configuering openssh"
 cp $CONFIG/etc/ssh/sshd_config /etc/ssh/sshd_config
 
 ###############
@@ -241,7 +239,6 @@ cp $CONFIG/etc/DIR_COLORS /etc/DIR_COLORS
 ##################
 echo ">>> Copying bash.bashrc to /etc"
 cp $CONFIG/etc/bash.bashrc /etc/bash.bashrc
-pacman --noconfirm --quiet -S bash-completion
 
 #######################
 # Configure /etc/skel #
@@ -249,18 +246,12 @@ pacman --noconfirm --quiet -S bash-completion
 echo ">>> Configuring /etc/skel"
 cp $CONFIG/etc/skel/.bash_profile /etc/skel/.bash_profile
 
-##############################
-# Install and configure sudo #
-##############################
-echo ">>> Installing and configuring sudo"
-pacman --noconfirm --quiet -S sudo
+##################
+# Configure sudo #
+##################
+echo ">>> Configuring sudo"
 cp $CONFIG/etc/sudoers /etc/sudoers
 
-####################
-# Install software #
-####################
-echo ">>> Installing extra software"
-pacman --noconfirm --quiet -S vim-minimal
 # Add vimrc to /etc
 cp $CONFIG/etc/vimrc /etc/vimrc
 

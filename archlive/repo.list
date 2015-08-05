@@ -1,3 +1,6 @@
 patch
 vim-minimal
 grub
+openssh
+bash-completion
+sudo
