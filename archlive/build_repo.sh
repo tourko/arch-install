@@ -1,15 +1,26 @@
-#!/bin/env sh
+#!/bin/bash
 
 if [[ ${EUID} -ne 0 ]]; then
 	echo "This script must be run as root."
 	exit
 fi
 
-# Get all packages and their dependecies for 'base' group
-PACKAGES=$(for package in `pacman -Sp --print-format %n base`
+# Add packages and their dependencies from repo.list
+PACKAGES=$(while read -r line
+do
+	pactree -lu $line
+done < <(grep -v "^[[:space:]]*$" repo.list))
+
+# Add packages and their dependecies from 'base' group
+PACKAGES+=$(for package in `pacman -Sp --print-format %n base`
 do
 	pactree -lu $package
-done | sort | uniq)
+done)
+
+PACKAGES=$(printf "%s\n" ${PACKAGES[@]} | sort -n | uniq)
+
+echo "Packets to be added to the repo:"
+echo $PACKAGES
 
 # Update pacman database
 pacman -Sy
