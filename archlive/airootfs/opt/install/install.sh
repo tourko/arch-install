@@ -125,12 +125,13 @@ MY_PATH=`( cd "$MY_PATH" && pwd )`
 ###########################
 echo ">>> Installing the base system"
 pacstrap -C ${MY_PATH}/pacman.conf /mnt base
-pacstrap -C ${MY_PATH}/pacman.conf /mnt patch
-pacstrap -C ${MY_PATH}/pacman.conf /mnt grub
-pacstrap -C ${MY_PATH}/pacman.conf /mnt openssh
-pacstrap -C ${MY_PATH}/pacman.conf /mnt vim-minimal
-pacstrap -C ${MY_PATH}/pacman.conf /mnt sudo
-pacstrap -C ${MY_PATH}/pacman.conf /mnt bash-completion
+
+# Install packages from repo.list
+while read -r line
+do
+	package=$(printf "%s" $line | grep -v "^[[:space:]]*$")
+	[ -n "$package" ] && pacstrap -C ${MY_PATH}/pacman.conf /mnt $package
+done < $MY_PATH/repo.list
 
 #####################
 # Generate an fstab #

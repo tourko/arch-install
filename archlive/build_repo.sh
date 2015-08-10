@@ -5,11 +5,15 @@ if [[ ${EUID} -ne 0 ]]; then
 	exit
 fi
 
+# Get the path to this script
+MY_PATH=`dirname "$0"`
+MY_PATH=`( cd "$MY_PATH" && pwd )`
+
 # Add packages and their dependencies from repo.list
 PACKAGES=$(while read -r line
 do
 	pactree -lu $line
-done < <(grep -v "^[[:space:]]*$" repo.list))
+done < <(grep -v "^[[:space:]]*$" $MY_PATH/airootfs/opt/install/repo.list))
 
 # Add packages and their dependecies from 'base' group
 PACKAGES+=$(for package in `pacman -Sp --print-format %n base`
@@ -24,10 +28,6 @@ echo $PACKAGES
 
 # Update pacman database
 pacman -Sy
-
-# Get the path to this script
-MY_PATH=`dirname "$0"`
-MY_PATH=`( cd "$MY_PATH" && pwd )`
 
 # Create repo directory if it does not exits
 REPO_PATH="$MY_PATH/airootfs/opt/install/repo"
