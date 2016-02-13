@@ -72,6 +72,10 @@
       <alias name='ide'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
     </controller>
+	<!--interface type='bridge'>
+	  <source bridge='br0'/>
+	  <mac address='52:41:54:00:00:05'/>
+	</interface-->
 	<interface type='network'>
 	  <source network='default'/>
 	  <mac address='52:54:00:f1:e3:88'/>
