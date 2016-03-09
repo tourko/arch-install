@@ -1,0 +1,25 @@
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh net-edit vm-network
+or other application using the libvirt API.
+-->
+
+<network>
+  <name>vm-network</name>
+  <uuid>cdb34ef4-3d78-4cbf-a366-858746b25103</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virtbr0' stp='on' delay='0'/>
+  <mac address='1e:41:54:00:00:01'/>
+  <ip address='192.168.100.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.100.2' end='192.168.100.254'/>
+      <host mac='1E:41:54:00:00:02' name='template' ip='192.168.100.2'/>
+      <host mac='1E:41:54:00:00:03' name='sandbox' ip='192.168.100.3'/>
+    </dhcp>
+  </ip>
+</network>

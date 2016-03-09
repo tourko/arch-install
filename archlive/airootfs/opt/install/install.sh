@@ -1,7 +1,6 @@
 #!/bin/bash
 
 TIMEZONE=Europe/Copenhagen
-USER=at
 
 ###############################################
 # Install on the first non-removabe SCSI disk #
@@ -147,7 +146,7 @@ echo ">>> Copying root FS overlay files"
 
 pushd ${MY_PATH}
 ROOTFS='rootfs'
-tar -cjf /tmp/${ROOTFS}.tar.bz2 ${ROOTFS}
+tar -cjf /tmp/${ROOTFS}.tar.bz2 -C ${ROOTFS} .
 popd
 
 mv /tmp/${ROOTFS}.tar.bz2 /mnt
@@ -156,7 +155,7 @@ mv /tmp/${ROOTFS}.tar.bz2 /mnt
 # Chroot into the new system #
 ##############################
 echo ">>> chroot into the new system"
-arch-chroot /mnt /bin/env PS1="(chroot) $PS1" TIMEZONE=$TIMEZONE USER=$USER DISK=$DISK /bin/sh < ${MY_PATH}/config.sh
+arch-chroot /mnt /bin/env PS1="(chroot) $PS1" TIMEZONE=$TIMEZONE DISK=$DISK /bin/sh < ${MY_PATH}/config.sh
 
 #####################################
 # Unmount the partitions and reboot #

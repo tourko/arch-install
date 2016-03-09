@@ -15,6 +15,7 @@ elinks
 ethtool
 f2fs-tools
 fsarchiver
+gcc-libs
 gnu-netcat
 gpm
 gptfdisk
