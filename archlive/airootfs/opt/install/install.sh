@@ -9,8 +9,8 @@ TIMEZONE=Europe/Copenhagen
 # 8 is a major number for SCSI devices
 MAJOR_NUMBER=8
 
-# Find first non-removabel SCSI disk devices
-DISK=`lsblk --path --nodeps --noheadings --include 8 --output=NAME,RM | (while read dev rm
+# Find first non-removabel SCSI disk devices and virtual disks
+DISK=`lsblk --path --nodeps --noheadings --include 8,254 --output=NAME,RM | (while read dev rm
 do
 	if (($rm == 0)); then
 		DISK=$dev
