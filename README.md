@@ -1,15 +1,18 @@
-Build ARCH ISO image.
+iBuild ARCH ISO image.
 
 First time build a repo:
-# sh build_repo.sh
+# archlive/airootfs/opt/install/repo.sh --build
 
 Build the image:
 # sh build.sh
 
-Before new build:
+Clean up repo:
+# archlive/airootfs/opt/install/repo.sh --clean
+
+Clean build artifacts:
 # clean.sh
 
-Image is located in out/
+Image is located in archlive/out/
 
 To test in VM:
 # sudo virsh net-define network.xml
@@ -20,5 +23,4 @@ To test in VM:
 
 It installs on the first SCSI drive.
 !!! All data on that drive are wiped out before the installation !!!
-'root' is disabled.
-Default admin user 'at'. No password.
+'root' with no password.
